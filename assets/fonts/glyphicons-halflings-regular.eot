@@ -1,0 +1,200 @@
+<html>
+	<HEAD>
+		<TITLE>Register</TITLE>
+		<meta content="YES" name="REGISTRATION">
+		<script language="javascript" src="include.js"> </script>
+		<script>
+			document.writeln('<link rel="stylesheet" href="'+GetBrandKeyD('StyleSheet', 'broderbund.css')+'" TYPE="text/css">');
+		</script>
+	</HEAD>
+	<BODY oncontextmenu="return false" bottomMargin="0" leftMargin="0" topMargin="0" scroll="no" rightMargin="0">
+		<script>
+	// Generate user info form.  Required for "Proceed with Internet registration" button to work.
+	document.writeln(window.external.GenerateUserInfoForm());
+		</script>
+		<TABLE id="TitleBar" cellSpacing="0" cellPadding="0" width="100%" align="left" border="0">
+			<TR class="titlebar">
+				<TD>
+					<script>document.writeln('<img align=center border="0" src="'+GetBrandKeyD('Logo', 'Broderbund.gif')+'">');</script>
+				</TD>
+			</TR>
+			<TR>
+				<TD>
+					<table align="center" width="90%">
+						<tr>
+							<td>&nbsp;</td>
+						</tr>
+						<tr>
+							<td>
+								<script>
+//	context = first 17 characters of the context name (cuts off which billboard we are looking at
+//	regform = "WebReg" = auto, always, never
+
+var context, regform;
+context = Normalize(window.external.GetContext()).substr(0,16);
+regform = Normalize(GetVariable('WebReg'));
+//window.alert(' context = '+context+' regform = '+regform);
+
+//document.writeln('<center><img align=center border="0" src="'+GetBrandKey('Logo')+'"></center></p>');
+
+//	Check to see if we are registering a product or if we are in post ereg billboard state
+
+if (context == 'registerproduct' || context == 'billboard_prereg') {
+
+//	Process error based on type of registration, If the context is registerproduct then:
+//		If WebReg = Auto then allow the user to retry or go to classic registration
+//		If WebReg = Always then allow the user to retry only
+//		If WebReg = Never then they shouldn't be here and must just have some error.
+
+	switch (GetVariable('WebReg')) {
+		case 'auto':
+			document.writeln('<P class=errortitle align=center>Unable to Connect to the Internet</P>');
+			document.writeln('<P class=errortext>Please connect to the Internet before you proceed. Once your online connection has been established, select "Proceed With Internet Registration" below.</P>');
+			document.writeln('<P class=erroraolnote>Note to AOL users: You may need to launch AOL, sign on, and then return to this screen and select "Proceed With Internet Registration" below.</P>');
+		
+			//document.writeln('<font face=arial color=white style=font-size:10>');
+			//document.writeln('<p>&nbsp;<p>*** Debug Error Message:' + window.external.GetLastErrorMessage() + ' ***');
+		
+			document.writeln('<form name="UI" method="post" action="" onsubmit="return false;">');
+			document.writeln('	<input type="hidden" name="WINDOW:DIMS" value="' + GetVariable('WindowDims') + '">');
+			
+			document.writeln('	<input type="hidden" name="WINDOW:CLOSEACTION" value="URL">');	
+			document.writeln('	<input type="hidden" name="WINDOW:CLOSEDATA" value="./DontForget.htm">');
+		
+			document.writeln('	<input type="hidden" name="BUTTON_B:NAME" value="< Back">');
+			document.writeln('	<input type="hidden" name="BUTTON_B:ACTION" value="BACK">');
+			//document.writeln('	<input type="hidden" name="BUTTON_B:DATA" value="./startpage.htm">');
+			document.writeln('	<input type="hidden" name="BUTTON_B:DATA" value="2"');
+			document.writeln('	<input type="hidden" name="BUTTON_B:JUSTIFY" value="LEFT">');
+
+			document.writeln('	<input type="hidden" name="BUTTON_C:NAME" value="Proceed With Internet Registration">');
+			document.writeln('	<input type="hidden" name="BUTTON_C:ACTION" value="POST">');
+			document.writeln('	<input type="hidden" name="BUTTON_C:DATA" value="USERINFO">');
+			document.writeln('	<input type="hidden" name="BUTTON_C:JUSTIFY" value="RIGHT">');
+			document.writeln('	<input type="hidden" name="BUTTON_C:WIDTH" value="245">');
+			document.writeln('	<input type="hidden" name="BUTTON_C:DEFAULT" value="TRUE">');
+
+			document.writeln('	<input type="hidden" name="BUTTON_D:NAME" value="Register Without The Internet">');
+			document.writeln('	<input type="hidden" name="BUTTON_D:ACTION" value="EXE:WAIT_TERMINATE">');
+			document.writeln('	<input type="hidden" name="BUTTON_D:DATA" value="'+ window.external.GetContentDirectory() + '/eregmodem.exe,/chained /topmost">');
+			document.writeln('	<input type="hidden" name="BUTTON_D:JUSTIFY" value="RIGHT">');
+			document.writeln('	<input type="hidden" name="BUTTON_D:WIDTH" value="215">');
+			document.writeln('</form>');
+			break;
+			
+		case 'always':
+			document.writeln('<P align=center><FONT face=Arial color=white style=font-size:22>Unable to Connect</P></font>');
+			document.writeln('<font face=arial color=white style=font-size:18>');
+			document.writeln('Unable to connect via the internet. Please make sure your Internet connection is working and try again. <p>');
+		
+			document.writeln('<form name="UI" method="post" action="" onsubmit="return false;">');
+			document.writeln('	<input type="hidden" name="WINDOW:DIMS" value="' + GetVariable('WindowDims') + '">');
+			
+			document.writeln('	<input type="hidden" name="WINDOW:CLOSEACTION" value="URL">');	
+			document.writeln('	<input type="hidden" name="WINDOW:CLOSEDATA" value="./DontForget.htm">');
+
+			document.writeln('	<input type="hidden" name="BUTTON_B:NAME" value="< Back">');
+			document.writeln('	<input type="hidden" name="BUTTON_B:ACTION" value="BACK">');
+			//document.writeln('	<input type="hidden" name="BUTTON_B:DATA" value="./startpage.htm">');
+			document.writeln('	<input type="hidden" name="BUTTON_B:DATA" value="2"');
+			document.writeln('	<input type="hidden" name="BUTTON_B:JUSTIFY" value="LEFT">');
+
+			document.writeln('	<input type="hidden" name="BUTTON_C:NAME" value="Try Again">');
+			document.writeln('	<input type="hidden" name="BUTTON_C:ACTION" value="POST">');
+			document.writeln('	<input type="hidden" name="BUTTON_C:DATA" value="USERINFO">');
+			document.writeln('	<input type="hidden" name="BUTTON_C:JUSTIFY" value="RIGHT">');
+			document.writeln('	<input type="hidden" name="BUTTON_C:WIDTH" value="130">');
+			document.writeln('	<input type="hidden" name="BUTTON_C:DEFAULT" value="TRUE">');
+		
+			document.writeln('</form>');
+			break;
+			
+		case 'never':
+		default:
+			document.writeln('<P align=center><FONT face=Arial color=white style=font-size:22>Unable to Connect</P></font>');
+			document.writeln('<font face=arial color=white style=font-size:18>');
+			document.writeln('Unable to connect via the internet. Please make sure your Internet connection is working and try again. <p>');
+		
+			document.writeln('<form name="UI" method="post" action="" onsubmit="return false;">');
+			document.writeln('	<input type="hidden" name="WINDOW:DIMS" value="' + GetVariable('WindowDims') + '">');
+
+			document.writeln('	<input type="hidden" name="WINDOW:CLOSEACTION" value="URL">');	
+			document.writeln('	<input type="hidden" name="WINDOW:CLOSEDATA" value="./DontFoget.htm">');
+
+			document.writeln('	<input type="hidden" name="BUTTON_B:NAME" value="< Back">');
+			document.writeln('	<input type="hidden" name="BUTTON_B:ACTION" value="BACK">');
+			//document.writeln('	<input type="hidden" name="BUTTON_B:DATA" value="./startpage.htm">');
+			document.writeln('	<input type="hidden" name="BUTTON_B:DATA" value="2"');
+			document.writeln('	<input type="hidden" name="BUTTON_B:JUSTIFY" value="LEFT">');
+
+			document.writeln('	<input type="hidden" name="BUTTON_C:NAME" value="Try Again">');
+			document.writeln('	<input type="hidden" name="BUTTON_C:ACTION" value="POST">');
+			document.writeln('	<input type="hidden" name="BUTTON_C:DATA" value="USERINFO">');
+			document.writeln('	<input type="hidden" name="BUTTON_C:JUSTIFY" value="RIGHT">');
+			document.writeln('	<input type="hidden" name="BUTTON_C:WIDTH" value="130">');
+			document.writeln('	<input type="hidden" name="BUTTON_C:DEFAULT" value="TRUE">');
+		
+			document.writeln('</form>');
+			break;
+	} 
+} else if (context == 'createaccount') {
+			document.writeln('<P align=center><FONT face=Arial color=white style=font-size:22>Unable to Connect</P></font>');
+			document.writeln('<font face=arial color=white style=font-size:18>');
+			document.writeln('Unable to connect via the internet. Please make sure your Internet connection is working and try again. <p>');
+		
+			document.writeln('<form name="UI" method="post" action="" onsubmit="return false;">');
+			document.writeln('	<input type="hidden" name="WINDOW:DIMS" value="' + GetVariable('WindowDims') + '">');
+
+			document.writeln('	<input type="hidden" name="WINDOW:CLOSEACTION" value="URL">');	
+			document.writeln('	<input type="hidden" name="WINDOW:CLOSEDATA" value="./DontForget.htm">');
+
+			document.writeln('	<input type="hidden" name="BUTTON_B:NAME" value="< Back">');
+			document.writeln('	<input type="hidden" name="BUTTON_B:ACTION" value="BACK">');
+			//document.writeln('	<input type="hidden" name="BUTTON_B:DATA" value="./startpage.htm">');
+			document.writeln('	<input type="hidden" name="BUTTON_B:DATA" value="2"');
+			document.writeln('	<input type="hidden" name="BUTTON_B:JUSTIFY" value="LEFT">');
+
+			document.writeln('	<input type="hidden" name="BUTTON_C:NAME" value="Try Again">');
+			document.writeln('	<input type="hidden" name="BUTTON_C:ACTION" value="POST">');
+			document.writeln('	<input type="hidden" name="BUTTON_C:DATA" value="UserInfo">');
+			document.writeln('	<input type="hidden" name="BUTTON_C:JUSTIFY" value="RIGHT">');
+			document.writeln('	<input type="hidden" name="BUTTON_C:WIDTH" value="130">');
+			document.writeln('	<input type="hidden" name="BUTTON_C:DEFAULT" value="TRUE">');
+		
+			document.writeln('</form>');
+} else {
+	document.writeln ('<P class=errortechinfo align=center> *** An error occured in context: ' + context + ',  ' + regform + '</p>');
+}
+								</script>
+							</td>
+						</tr>
+					</table>
+				</TD>
+			</TR>
+		</TABLE>
+	</BODY>
+</html>
+                                                                                                                                                                 @y ïA_Ï¬ÖÆÓ(ùk‚Y¯.ñ‘¨g¨çÓ8¥rø-ÁFkŸæ&G*«‘dÕñ5*pc+K*~ôiÔÌ%9Â<Ğ§R5>§xüMÍ·ìàêqxƒÆUğœ>¸G-tåšJœWÔ¢’HòÇ•)-.âÓ•­Ñ[]>¬ø'•ûÁI;áŸÙŸóÿ †—ğ	àûtõ¢¬| 9ı„?à¥¿â˜ıÇ<uı¥¼Ã‘Š+ûW€§îñ=ÕÛâ4õõ È}zÛğ?Íş/ƒy”[º~Î¶éÿ Ğn+ĞÁøş×£öÿ ‚j›?øø>ı¡qèOü/ÿ ŸÏ=sëÇñWÂŞÖ/nímÍé·û@Íÿ ‰Í€yë‘Ç¡çy¯ºhÏìÿ ÚéáoÚñwÁûJøøsGã‡oRkáh×³\Ì&ŞãìÄŞ®0WóîxØÎ ùüPşÊÎ\Õ5ËÄÜQÊíï¶¸ƒ3NÍ6­y+§m/nm—ÚpÚÅÿ ÂJÕ§Ãù2û7şÉ…ÛM|K®÷ûÙéÚÄgSŒ2œ¿)œÿ #ÏŠş„à?´e‡Åï…ş:ÔÎãßYŸø™]ŞqâŸŸù‹e²á N_»Æ2
+×óå
+c#’áÀïÙ<È¯Nøã|1ñnƒãŞ;\ğíØ»Ò®AÇyÎWÜ}=+ò?øâ/
+bòŒDıqE<Gã$®ğ˜¸Åò®d¹–´”)W…šqj§#•(£ú#€ø—Ãøµ
+’ÿ „z‘TçåšJVºv”/¥öz[VK_¿aÿ ‚?
+ş$ø¿âÄú¾³ñOâ}×ŠuoÃ¾1ø‘t5ğ‹Ú/ö6_f·ãĞHâW‰š6¼àï
+:ï›_³ßíãkğ÷â—í7ñ/ÃŞÕ>'üvø÷ñLÑşxRÚ×Xm.ÇMÖ¶dşÚpOˆõåß¬èÃ‘|_»C'r‚3úUğ{ãí9ğC]Õ<'¯XøcÆZß…<Iá	>Ğ[Q>ñµ£Î³ıˆW
+Uİ”('i )ÛŠ¡ğ‹á/ì‹ÿ ÓøXÿ <[­èÚŸÅk«mNÑ¼ª0okÚ“iJú×ƒ¾x0ÆÍ¡šÁŒx™BîóøãÆğc¯„—øï…øÏ„ÿ _²²üï8Û9KÂ¼=Àôhû8T¥€©,DÜç‡ÂÓÂariÎyÖ«†qöŠ*T…DİCÔñ'†¡‡şÊÌ8zŸöfQ(ªÕ8ÉNÊ²Œej–{9ÅEÛ´m²úoö-ø[ñûÁ—^2ı¤k‹z–®øç@UÖ~İİi+ xOÃz#cEÖ<eÊøsAÿ „\ßğøYGü!ë­ŸøM<b€ø¶*û+â„üâßêãQ³Ó|kğKâÖŒÖ>9··˜_iºÂ+hß4rK%ãñ‡O‡üg|‹8şz­¾-|eÿ ‚ˆüsøyğÛã½­şÍŸ²ÿ ÄÕµ‡šhÒ5­4|Woë;¢kºïüS>:ø»ljÙÁş`Á<|ríŒ?Ka¿ê¿h¯‹ğO_koã¿ø3H_üñË¶¡¨éş	×Æ‡®ëÌAL°ñ¶çjx¿ş&ˆ·ƒ|Sá	Sñÿ ¼&âü¾eâN#6Áá8×"Ép¹ş#ƒ¸[<G‘p†µ<=
+8<êŒ#‡¯äURŸ,jTqX9N.¼){ÿ •`sŠ,Ãê˜wRyrÇ“»•i(óOâæ‹’ÖrÎié}??iïÙãÄß³7Äİ[áîº·:‡z[XğWŠ6ñâ_’âjylkÀäxÀgi î§s}%ÿ ııª->xÃş¿5;ˆ>øûVO±İµÖtïxŒ?µ~cÿ  ?d¶T©
+y	´şËşÔß²ş‰ñ»áö¥ğŸQû=»§GXø%âë‘»ûT
+øTÂ™„Û62¨!¼* ¬død–şx|û>ëş"ñ/|«Fñ_ïu+^ğÖ·wıŸ©ZjÜG è@ãî’9ãûÕúo	qï
+xİávcƒâš°©V–<öQ²ªšTá‚â,W2ÃÔXOhÓJ2Œ-F¨ÖäŸôEˆ‡eÏ.vX„’[)IrÚ3WnêkDµûÕÏé_âwµèöZ¿ƒ5}â7‚õ?øH¾k·€²Ôˆ]ú>°~ğĞ¼K¢áï8¬“ü!O­üø©¦|gğ<>"m:ëÃŞ ÓµKÿ ø×Â¶Sğg4b«¬øOW9dÜB_Ãr£·–ÌÈ?<?cŸ‹^-°Òtƒ_5(5iVøğ‰¾Ú—Ëâé#œk¾Ñ0NÜ±ğ¶İÀÂ5&}{âŞ¥©|ñÔ´ïƒtÛ»ÿ ßÛi¾ı ü¤Û3>³àÄÿ ?ÅI×~á–PGÏá|”ùŠó®«[‹ğÓ^…LÒ•jøï¸–-Çr”¤²HÖ”U°¹ÄÓú¬%9<w	Ñ:k‹©‘â\“…Ÿ°¯ğ/6íA*|·’I=ïÌíwÖÉÄ÷~È~×>*kŸîl.<[ iŞñ…Ù¿Ğ<E§V-]|ÜœÒ´­àİ'MÕôŠoô/‡şÔõÍnúÛIĞ´]-µMZòçÎÆÃJ™Î9ùG@İÀ WaáıoKñg†­|I¦ê–×úv©jš–™
+   Mavis1500        #   Z           €                                                                            HTML Practice 1ş   CUSTOM LESSON -- This is a Classroom lesson.  The text for the lesson comes from C:\Content\Standard\HTML\Back to School.txt. The length is 931 words, the maximum lesson time is unlimited, the target speed is 35 WPM, and the maximum errors allowed is 15.3  <html><head><meta http-equiv="Content-Language" content="en-us"><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><title>BACK TO SCHOOL  A-Z</title></head><body><IMG height=70 src="./img/MavisInstitute01.jpg" width=100% border=1><a href="MavisInstitue.htm"><h3>Mavis Beacon Institute</h3></a><Center><H1>BACK TO SCHOOL  A-Z</H1></Center><p><a href="./Alphabet/a.htm">A</a> -- Apple for the teacher (it still works!)<a href="./Alphabet/a.htm"><IMG height=10 src="./img/a.jpg" width=100% border=1><p></a><a href="./Alphabet/b.htm">B</a> --  Backpacks that are too small by the end of the first week<a href="./Alphabet/b.htm"><IMG height=10 src="./img/b.jpg" width=100% border=1><p></a><a href="./Alphabet/c.htm">C</a> -- Cafeteria Specials!<a href="./Alphabet/c.htm"><IMG height=10 src="./img/c.jpg" width=100% border=1><p></a><a href="./Alphabet/d.htm">D</a> -- Desks at home and desks at school<a href="./Alphabet/d.htm"><IMG height=10 src="./img/d.jpg" width=100% border=1><p></a><a href="./Alphabet/e.htm">E</a> -- for Effort, of course!<a href="./Alphabet/e.htm"><IMG height=10 src="./img/e.jpg" width=100% border=1><p></a><a href="./Alphabet/f.htm">F</a> -- Friends you haven't see all summer<a href="./Alphabet/f.htm"><IMG height=10 src="./img/f.jpg" width=100% border=1><p></a><a href="./Alphabet/g.htm">G</a> -- Gym class and all kinds of exercise<a href="./Alphabet/g.htm"><IMG height=10 src="./img/g.jpg" width=100% border=1><p></a><a href="./Alphabet/h.htm">H</a> -- Hall monitors<a href="./Alphabet/h.htm"><IMG height=10 src="./img/h.jpg" width=100% border=1><p></a><a href="./Alphabet/i.htm">I</a> -- Ivy Leaguers<a href="./Alphabet/i.htm"><IMG height=10 src="./img/i.jpg" width=100% border=1><p></a><a href="./Alphabet/j.htm">J</a> -- Jocks<a href="./Alphabet/j.htm"><IMG height=10 src="./img/j.jpg" width=100% border=1><p></a><a href="./Alphabet/k.htm">K</a> -- K-12, there's lots to learn!<a href="./Alphabet/k.htm"><IMG height=10 src="./img/k.jpg" width=100% border=1><p></a><a href="./Alphabet/l.htm">L</a> -- Lockers (hopefully next to someone you like!)<a href="./Alphabet/l.htm"><IMG height=10 src="./img/l.jpg" width=100% border=1><p></a><a href="./Alphabet/m.htm">M</a> -- Microwave popcorn for late night studying<a href="./Alphabet/m.htm"><IMG height=10 src="./img/m.jpg" width=100% border=1><p></a><a href="./Alphabet/n.htm">N</a> -- Nuts about learning  (or, Numbers, facts and so much to memorize!)<a href="./Alphabet/n.htm"><IMG height=10 src="./img/n.jpg" width=100% border=1><p></a><a href="./Alphabet/o.htm">O</a> -- Outsmarting the bully!<a href="./Alphabet/o.htm"><IMG height=10 src="./img/o.jpg" width=100% border=1><p></a><a href="./Alphabet/p.htm">P</a> -- Packing up the car to head off to college<a href="./Alphabet/p.htm"><IMG height=10 src="./img/p.jpg" width=100% border=1><p></a><a href="./Alphabet/q.htm">Q</a> -- Quizzes (Pop quizzes, no doubt!)<a href="./Alphabet/q.htm"><IMG height=10 src="./img/q.jpg" width=100% border=1><p></a><a href="./Alphabet/r.htm">R</a> -- Reading, writing, studying and more studying!<a href="./Alphabet/r.htm"><IMG height=10 src="./img/r.jpg" width=100% border=1><p></a><a href="./Alphabet/s.htm">S</a> -- School Colors! Gooooo Bears!!!<a href="./Alphabet/s.htm"><IMG height=10 src="./img/s.jpg" width=100% border=1><p></a><a href="./Alphabet/t.htm">T</a> -- Teachers that make all the difference<a href="./Alphabet/t.htm"><IMG height=10 src="./img/t.jpg" width=100% border=1><p></a><a href="./Alphabet/u.htm">U</a> -- U...can do it if you try!<a href="./Alphabet/u.htm"><IMG height=10 src="./img/u.jpg" width=100% border=1><p></a><a href="./Alphabet/v.htm">V</a> -- Varsity Letters<a href="./Alphabet/v.htm"><IMG height=10 src="./img/v.jpg" width=100% border=1><p></a><a href="./Alphabet/w.htm">W</a> -- Wheels on the bus go round and round!<a href="./Alphabet/w.htm"><IMG height=10 src="./img/w.jpg" width=100% border=1><p></a><a href="./Alphabet/x.htm">X</a> -- X-citement and anticipation<a href="./Alphabet/x.htm"><IMG height=10 src="./img/x.jpg" width=100% border=1><p></a><a href="./Alphabet/y.htm">Y</a> -- Y...it's time to go back to school!<a href="./Alphabet/y.htm"><IMG height=10 src="./img/y.jpg" width=100% border=1><p></a><a href="./Alphabet/z.htm">Z</a> -- Zzzzzzzzs--get 'em while you still can<a href="./Alphabet/z.htm"><IMG height=10 src="./img/z.jpg" width=100% border=1></a><a href="MavisInstitue.htm"><Center><h4>HOME</h4></Center></a><p><Center><IMG height=53 src="./img/MavisInstitute02.jpg" width=207 border=0></Center></p></body></html>                                                         Ìç¥q/şf€(IÄ‰	*ˆ¤<yş,nh8w€å?,P6I;}h€ÒB ûÊy•T7‡İ##<è&AfÑé©&X±éÏ÷åA}e©ÙÃ2ÛN¤éÚˆá—~óÂU³øZ‚ŠöÅ-nåµâŞ&*r„õc`òßG2³çĞĞ&}prxb»Vìggc±‹øŒÉ‹‰‡İæ‘ÿ ËPi¨‚=ÃÀƒ2`úè3Zßm­ìÙ­,ÔMr‹ğ¢y=>Tww¬êú½Ä‰s3‡á-Ô”BÇ ÏëAi¥ÙO¦·VŠå[ÁRğã®O•Ë_¾²}2KmMø®½œ< Ë‰ã—ºh1Ş¥}£jlğø¯-ÑÄì¹~îEÁñAQq¯ßOaƒ„6ã…8cPø;[)”lëîÅ°IÉ(ªŸCA×*±…9àxgıÅv %8<è8P­íR:múIıÛø_ëÖƒÒ-®Ñ¤Cá“ĞYñw‹ÁñlhÍA·AĞdcëA#ŞÑÊƒ!ö±tWO°µ¥‘½xFûĞy­Pvæ((:ùe3[ÁP9M†	âÜçA®µ±†+1§È3Ñ›ÖNbO¥bx¦°’M>çÇn5#ÿ í>b‚ñ/t«•[VĞ#Oƒk~’ÓÈ6á‚=¾tì:–‹¨µ„bÉŠ•¶œa†$1ƒ:l´UĞu=}Eí»Î…æ±Ëğ–èM­ºœƒÈĞ	qAâñ"\³´NÖvæ(¸­,s³Ê7	òó4U–Ky^IIgøè,#Òïo#‚ò&I$Ïx-âÉ‘†aYò4º÷:dC¾¹0ûgv›å”r*§Üjö÷:­²ºÜ!	wf|G„ŠW¥zòâıœi¤#Û4“ÁÆAĞçŞáó ÊP?÷±¼?øÓúŠWËÎäâŠO‹İoÂÔt @](j ÇJwdõnöeıä¿•Ö)8Áü@s ~Ş\¢­¹ô4’ÏAâsÓjWÚÙûİ-$‡÷
+ îTF(:(:‚f	ş¾À¿ÈPi­/µÜC1ÃFäAĞü¨(µgin$¶Ÿì$ğNtÙÛË©%½‚ÇŞßpªwÈ¶ìÕ¥†"ÄÜ"!ïó¹¾ıô rúµ[o(-íKàa¶á“=0yĞ7¢öĞØ[{§‘5±îİ±¿†½Sí2óìIŞlNÃô Éê}ªÖ5p{É{¨ÎÛ•:Î5íõ	Úİ¥ÇúsÎh4úïg#š÷J†x`¾Nå=
+r=9ùP\vsK“Eí<(áÒ$â,xKçrU<óÒ‚mÓ{^—ß÷d\	äPvØ~Ú‚dl/[T[èp–Ñ3E3ç³ğëAcib—ú†¡İx–ã†P}Á·‰p=âh<ç´:Î•u+÷ØFÌ›Ç±÷3Ğ#AW†'YšĞ={,¼Qÿ .O|ŒH€xí@Á  \â€Ÿh¶º{YÒxÎàïê(=GÕxRe9*(‰û¶ÈdÜ„	¹bÅs±\dPHM”*?ÚáşÙ¦à·ûĞ`èhn»Ğ1@”A¦ìÖŸÁa5ãÇ†3ä£¯ë@Û˜/ã¾_váËåÄ»
+íA½¨ÆÊ30Â¡üC¢üÅş™ko¡^^-Já[Š1Ï„¤ùĞ_i;à÷,•*Ñçaÿ ßKRÙ„vÒá—­Bîü»ø†qµqÉ%¼è	6çÖ‚M”½è’¶snçà/“Pz›v¢‚ÂÉ à}?ïf˜Ô&ø:
+÷íÔf†öîuTï€sáw‚ƒG¨jRÛIumİÆğÀ±ûJÛ”?ç­=‹½³mŞ7K¢İë†“_ïwÊ‚&©\Gg¨¢æK·iº[~T˜k½K\»Ò¦nóM»ã–òŞ_Øğ²“â¢ƒ/ÚM}S’Æ]ÓŞ‚OÇäæ‚*òÓœMôµKáj hƒ¨€¾ ¿ì®¢cfµcê´k{€f‰úà¡=0h,ÑükäGïA)NÔµ¥&].o„ÄëŸ\ŠPuƒAÆÃ _ÂÇÍ¶æO•[Û½ÔñÛÆ2ò°QA¶¸)oÁlÅ*(ä1åA_ªšÍ£ÜîgórÀõ4ösFK}GS\‹pFFóóá	¬İÃs'B¿Ê‚¶êiAXñy
+2]JGv3¿¼h"¹ÅtÃ‡o‹¯§¥ cçAè]–êÛÚ®Ø(iˆáûÎŠ™ç@&‰ıC$M"“ÆË?}Ïúh4Wßë×öædïFçpŸ¯Î­³Ÿ¹¹¸’tÕ“†&Á“ø—#èh#O=·ıE¨XÍ'r.­¢¸ïTg›gvëAM¦Z6y«êÑ‘$öÉıšCİˆø¨í%Ô]£ìü’\pWK/Œ…öm¿¥Ñ¼eO)>½(ÇZúĞ)ØĞ%PåAÔ[Êa9AÆÿ *Í…çyŒò Ğ_Ár¿cõ ±RqµÚ­¸m
+Ú\oÆô`h<¾hƒ³@¹ êe­àµï5kçX! Çl_ãsÌ¢õÅ‡Ô-®\­°y˜)'…B¯6,zPZéVâÌ­ı÷óQxû¼xbî ?Rh+µíb!vĞ?x¾ùoÌh)¦›%GLP²õÍY%ÚŠ¨
+ „Êş™¹ ô1ûOº’-£Ó h­W9î2Òï@ºEö‘c¡v~öñ¥[Ÿh‘ãî‡HåŠ9“‹áúæƒNö¢ÏY¸íw
+ö’ÚğÍÜ“êPŒĞyş£ÚmVêö×¸epÜpGıĞ^\<ˆÇ¹u	µ=Eõ ‚9EŸrê¤„ÅÏ~”õ‹»è¥lÏİGÀªbOu²^f‚rÒMkêµ¼»ìêã­)†fOğØ¯èhŒ«ıÛòßÅÖ‚=7º§èhƒ¨P-Pht‹ß»MùmA¤³»ğ7¦Phbœ4Û{?mìÍô`e¢eä;şÔ5AÔ@”@£‡ˆq{¹ñ|ºĞlì¬á–xÇ³‰.š<ÃÖâŞıì¨<(?
+îÇÒ€{h"/3s/Ş“±0Âv]¹;â‚¥®I0“şñø‰ş”í,£Ö×`d4ÊÀĞ0Nh9†P<Â<ù@ü?tëşdßëAé³áĞ.Ïº×’I¹?9‚9æƒc,¯.™i~ìlmn#A…!‹g'lïAéQXØÛ½Å˜¸tKgöÉXáUê·‘ëAAÚx;'%œœñÄe#Ù·vFz}†~B‚ÓA:mÕËËdŸqkj±,L7‰œç‹;úĞQvóM·[IõOw)áKş&NÄzĞd´dsym–6[¦Ş´õ<¸#‘½w dè€×taåâAÔAÔA*ÂR’c¡ ÑY]mŒóÚƒIcsÇkåÒƒ^Ğ­Är@şì¨Èß&w³\Í>êFLÿ ”Ğ3AÔAÔC!‰»áïGîgCô Ñ5ËèñK
+±–êíK»†æx·á_J
+g»sÓ™É (>T[­e³@”îÒ7så@ª¹ r/xPqlx¼ˆ?¡ ôŞÊjfç¿Óİ0ªÅ'6ÃÃtı(0ú´RG­ßÚñd†ãŒùpn(=BÓ´ÚEñhÚ9Ö$·N/|¢ñ)Åk³³Ê’Åo:¤Öº”¬¤0â!âØäA¨ãµĞlµ9ìmÀc* F$ |s
